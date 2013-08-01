@@ -1,6 +1,6 @@
 TEMPLATE = app
 TARGET =
-VERSION = 0.6.3
+VERSION = 0.6.5.2
 INCLUDEPATH += src src/json src/qt
 DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN __NO_SYSTEM_INCLUDES
 CONFIG += no_include_pwd
@@ -20,7 +20,9 @@ CONFIG += no_include_pwd
 #BDB_LIB_PATH=c:/deps/db/build_unix
 #OPENSSL_INCLUDE_PATH=c:/deps/ssl/include
 #OPENSSL_LIB_PATH=c:/deps/ssl
-#OBJECTS_DIR = build
+#MINIUPNPC_LIB_PATH=c:/deps/miniupnpc
+#MINIUPNPC_INCLUDE_PATH=c:/deps/
+OBJECTS_DIR = build
 MOC_DIR = build
 UI_DIR = build
 
@@ -37,9 +39,21 @@ contains(RELEASE, 1) {
     }
 }
 
-# qmake "USE_UPNP=-" (not supported)
+# use: qmake "USE_UPNP=1" ( enabled by default; default)
+#  or: qmake "USE_UPNP=0" (disabled by default)
+#  or: qmake "USE_UPNP=-" (not supported)
+# miniupnpc (http://miniupnp.free.fr/files/) must be installed for support
 contains(USE_UPNP, -) {
     message(Building without UPNP support)
+} else {
+    message(Building with UPNP support)
+    count(USE_UPNP, 0) {
+        USE_UPNP=1
+    }
+    DEFINES += USE_UPNP=$$USE_UPNP STATICLIB
+    INCLUDEPATH += $$MINIUPNPC_INCLUDE_PATH
+    LIBS += $$join(MINIUPNPC_LIB_PATH,,-L,) -lminiupnpc
+    win32:LIBS += -liphlpapi
 }
 
 # use: qmake "USE_QRCODE=1"

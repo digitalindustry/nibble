@@ -4,7 +4,6 @@
 // Copyright (c) 2013 Nibble Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
-// build 0.6.5.1 courtesy of shakezula :)
 #ifndef BITCOIN_VERSION_H
 #define BITCOIN_VERSION_H
 
@@ -18,7 +17,7 @@
 #define CLIENT_VERSION_MAJOR       0
 #define CLIENT_VERSION_MINOR       6
 #define CLIENT_VERSION_REVISION    5
-#define CLIENT_VERSION_BUILD       1
+#define CLIENT_VERSION_BUILD       2
 
 static const int CLIENT_VERSION =
                            1000000 * CLIENT_VERSION_MAJOR
